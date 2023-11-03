@@ -1,0 +1,40 @@
+register:
+  post:
+    tags:
+      - User
+    summary: Register new user
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: ../api.yaml#/components/schemas/User
+    responses:
+      201:
+        description: Registered user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: ../api.yaml#/components/schemas/User
+      422:
+        $ref: ../api.yaml#/components/responses/JsonValidationError
+
+balances:
+  get:
+    tags:
+      - User
+    summary: User balances
+    responses:
+      201:
+        description: Balances
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../api.yaml#/components/schemas/Balance

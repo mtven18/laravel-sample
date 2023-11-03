@@ -1,0 +1,31 @@
+Transaction:
+  type: object
+  readOnly: true
+  properties:
+    id:
+      type: integer
+    from_user:
+      $ref: user.yaml#/TransactionUser
+    to_user:
+      $ref: user.yaml#/TransactionUser
+    amount:
+      type: number
+      format: float
+      example: 123.50
+    currency:
+      $ref: balance.yaml#/Currency
+    status:
+      $ref: transaction.yaml#/Status
+    created_at:
+      type: integer
+      description: Timestamp
+    completed_at:
+      type: integer
+      description: Timestamp
+
+Status:
+  type: string
+  enum:
+    - pending
+    - success
+    - failed

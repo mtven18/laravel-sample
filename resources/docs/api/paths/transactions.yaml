@@ -1,0 +1,70 @@
+transactions:
+  get:
+    tags:
+      - Transactions
+    summary: Get auth user transactions list
+    security:
+      - Bearer: []
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Default 1
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: Default 10
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../api.yaml#/components/schemas/Transaction
+  post:
+    tags:
+      - Transactions
+    summary: Make new transaction
+    security:
+      - Bearer: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              to:
+                type: string
+              amount:
+                type: number
+                format: float
+              currency:
+                $ref: ../schemas/balance.yaml#/Currency
+    responses:
+      201:
+        description: Created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: ../api.yaml#/components/schemas/Transaction
+      403:
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      404:
+        $ref: ../api.yaml#/components/responses/JsonNotFoundError

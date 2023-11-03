@@ -1,0 +1,14 @@
+Balance:
+  type: object
+  properties:
+    amount:
+      type: number
+      format: float
+      example: 123.50
+    currency:
+      $ref: balance.yaml#/Currency
+
+Currency:
+  type: string
+  enum:
+    - usd

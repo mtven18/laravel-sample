@@ -1,0 +1,70 @@
+login:
+  post:
+    tags:
+      - Auth
+    summary: Log in to the system
+    requestBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              username:
+                type: string
+                required: true
+                example: john.doe@gmail.com
+                description: User name or email
+              password:
+                type: string
+                required: true
+                example: password
+    responses:
+      200:
+        description: Authenticated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: ../api.yaml#/components/schemas/User
+                token:
+                  type: string
+      401:
+        description: Invalid credentials
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Unauthenticated
+      422:
+        $ref: ../api.yaml#/components/responses/JsonValidationError
+
+user:
+  get:
+    tags:
+      - Auth
+    summary: Get auth user
+    security:
+      - Bearer: []
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              data:
+                $ref: ../api.yaml#/components/schemas/User
+
+logout:
+  post:
+    tags:
+      - Auth
+    summary: Log out from the system
+    security:
+      - Bearer: []
+    responses:
+      204:
+        description: OK
